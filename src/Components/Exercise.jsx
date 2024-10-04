@@ -13,7 +13,8 @@ function Exercise({setexercises, bodypart,exercises}) {
         exercisesData = await FetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodypart}`, exerciseoptions);
       }
 
-      setexercises(exercisesData);
+      setexercises(exercisesData || []);
+      console.log(exercisesData)
     };
 
     fetchExercisesData();

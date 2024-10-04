@@ -3,10 +3,11 @@ import { CiSearch } from "react-icons/ci";
 import { FetchData, exerciseoptions } from "../Utils/FetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 
-function Search({setexercises,exercises, bodypart, setbodypart}) {
+function Search({ setexercises, exercises, bodypart, setbodypart }) {
   const [Search, setsearch] = useState("");
 
   const [bodyparts, setbodyparts] = useState([]);
+  //const [ishover,setishover] = useState(false)
 
   useEffect(() => {
     const fetchExcersises = async () => {
@@ -16,7 +17,6 @@ function Search({setexercises,exercises, bodypart, setbodypart}) {
       );
 
       setbodyparts(["all", ...bodypartsData]);
-    
     };
     fetchExcersises();
   }, []);
@@ -28,21 +28,42 @@ function Search({setexercises,exercises, bodypart, setbodypart}) {
         exerciseoptions
       );
 
-     // console.log(excersiseData);
-      const searchedExercises = excersiseData.filter(
-        (item) => item.name.toLowerCase().includes(Search)
-               || item.target.toLowerCase().includes(Search)
-               || item.equipment.toLowerCase().includes(Search)
-               || item.bodyPart.toLowerCase().includes(Search),
-      );
+      //console.log(excersiseData);
+      //  const searchedExercises = excersiseData.filter(
+      //   (item) => item.name.toLowerCase().includes(Search)
+      //          || item.target.toLowerCase().includes(Search)
+      //          || item.equipment.toLowerCase().includes(Search)
+      //          || item.bodyPart.toLowerCase().includes(Search),
+      // );
 
-      window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
+      const searchedExercises = Search.trim()
+        ? excersiseData.filter(
+            (item) =>
+              item.name.toLowerCase().includes(Search.toLowerCase().trim()) ||
+              item.target.toLowerCase().includes(Search.toLowerCase().trim()) ||
+              item.equipment
+                .toLowerCase()
+                .includes(Search.toLowerCase().trim()) ||
+              item.bodyPart.toLowerCase().includes(Search.toLowerCase().trim())
+          )
+        : excersiseData;
 
-      setsearch('');
+      //console.log(searchedExercises);
+      window.scrollTo({ top: 1800, left: 100, behavior: "smooth" });
+
+      setsearch("");
       setexercises(searchedExercises);
-      console.log(exercises);
+      //console.log(exercises);
     }
   };
+
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+
+      handleSearch(); // Call the search function when "Enter" is pressed
+    }
+  }
 
   return (
     <div>
@@ -59,6 +80,7 @@ function Search({setexercises,exercises, bodypart, setbodypart}) {
               type="text"
               value={Search}
               onChange={(e) => setsearch(e.target.value.toLowerCase())}
+              onKeyDown={handleKeyPress}
               placeholder="Search Excersise"
             />
           </div>
@@ -80,12 +102,8 @@ function Search({setexercises,exercises, bodypart, setbodypart}) {
           setbodypart={setbodypart}
         />
         {/* <h1>Results</h1> */}
-        
-            
-             
-           
-            
-         {/* <Excersise   setexercises={setexercises}
+
+        {/* <Excersise   setexercises={setexercises}
           bodypart={bodypart}
           exercises={exercises} /> */}
       </div>

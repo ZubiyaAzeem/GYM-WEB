@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Exercise from "../Components/Exercise";
 import Search from "../Components/Search";
-
+import ExerciseDetails from "./ExerciseDetails";
 function Home() {
   const [exercises, setexercises] = useState([]);
-  const [bodypart,setbodypart]=useState('all')
+  const [bodypart, setbodypart] = useState("all");
   return (
     <div className="relative z-0  bg-black">
       {/* Banner Image Section */}
@@ -28,10 +28,11 @@ function Home() {
           <h2 className="text-4xl py-6 text-center  font-semibold">Exercise</h2>
           {/*Exercise section content here */}
 
-           <Exercise   setexercises={setexercises} 
-          bodypart={bodypart}
-          exercises={exercises} /> 
-       
+          <Exercise
+            setexercises={setexercises}
+            bodypart={bodypart}
+            exercises={exercises}
+          />
         </div>
       </div>
     </div>
